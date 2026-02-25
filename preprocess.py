@@ -7,7 +7,7 @@ from langchain_core.exceptions import OutputParserException
 
 def process_posts(raw_file_path, processed_file_path="data/processed_posts.json"):
     enriched_posts = []
-    with open('posts.json', encoding='utf-8') as file:
+    with open(raw_file_path, encoding='utf-8') as file:
         posts = json.load(file)
         
         for post in posts:
@@ -24,29 +24,6 @@ def process_posts(raw_file_path, processed_file_path="data/processed_posts.json"
 
     with open(processed_file_path, encoding='utf-8', mode="w") as outfile:
         json.dump(enriched_posts, outfile, indent=4)
-
-
-def extract_metadata(post):
-    template = '''
-    You are given a LinkedIn post. You need to extract number of lines and tags.
-    1. Return a valid JSON. No preamble. 
-    2. JSON object should have exactly 2 keys: line_count and tags. 
-    3. tags is an array of text tags. Extract maximum two tags.
-    
-    Here is the actual post on which you need to perform this task:  
-    {post}
-    '''
-
-    pt = PromptTemplate.from_template(template)
-    chain = pt | llm
-    response = chain.invoke(input={"post": post})
-
-    try:
-        json_parser = JsonOutputParser()
-        res = json_parser.parse(response.content)
-    except OutputParserException:
-        raise OutputParserException("Context too big. Unable to parse jobs.")
-    return res
 
 
 def get_unified_tags(posts_with_metadata):
@@ -81,6 +58,27 @@ def get_unified_tags(posts_with_metadata):
         raise OutputParserException("Context too big. Unable to parse jobs.")
     return res
 
+def extract_metadata(post):
+    template = '''
+    You are given a LinkedIn post. You need to extract number of lines and tags.
+    1. Return a valid JSON. No preamble. 
+    2. JSON object should have exactly 2 keys: line_count and tags. 
+    3. tags is an array of text tags. Extract maximum two tags.
+    
+    Here is the actual post on which you need to perform this task:  
+    {post}
+    '''
+
+    pt = PromptTemplate.from_template(template)
+    chain = pt | llm
+    response = chain.invoke(input={"post": post})
+
+    try:
+        json_parser = JsonOutputParser()
+        res = json_parser.parse(response.content)
+    except OutputParserException:
+        raise OutputParserException("Context too big. Unable to parse jobs.")
+    return res
 
 if __name__ == "__main__":
     process_posts("data/raw_posts.json", "data/processed_posts.json")
