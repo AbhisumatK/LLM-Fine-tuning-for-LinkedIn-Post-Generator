@@ -40,8 +40,8 @@ def get_unified_tags(posts_with_metadata):
        Example 2: "Motivation", "Inspiration", "Drive" can be mapped to "Motivation"
        Example 3: "Personal Growth", "Personal Development", "Self Improvement" can be mapped to "Self Improvement"
        Example 4: "Scam Alert", "Job Scam" etc. can be mapped to "Scams"
-    2. Each tag should be follow title case convention. example: "Motivation", "Job Search"
-    3. Output should be a JSON object, No preamble
+    2. Each tag should follow title case convention. example: "Motivation", "Job Search"
+    3. Output should be a JSON object, No preamble.
     3. Output should have mapping of original tag and the unified tag. 
        For example: {{"Jobseekers": "Job Search",  "Job Hunting": "Job Search", "Motivation": "Motivation}}
     

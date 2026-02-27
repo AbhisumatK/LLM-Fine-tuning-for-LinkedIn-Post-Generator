@@ -3,7 +3,7 @@ import pandas as pd
 
 class Few_Shot_posts:
     def __init__(self, file_path='data/processed_posts.json'):
-        self.df = None #pd.read_json(file_path)
+        self.df = None
         self.unique_tags = None
         self.load_posts(file_path)
 
