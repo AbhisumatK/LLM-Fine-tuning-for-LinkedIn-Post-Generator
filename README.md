@@ -4,6 +4,8 @@ This project is an AI-powered LinkedIn post generation tool built using Few-Shot
 
 The system learns writing patterns from my real [LinkedIn](https://www.linkedin.com/in/abhisumat-kundu/) posts and uses them as contextual examples to produce new content that matches my tone, structure, and intent.
 
+Deployed App - https://linkedin-llm-abhisumat.streamlit.app/
+
 My LinkedIn - https://www.linkedin.com/in/abhisumat-kundu/
 
 ---
