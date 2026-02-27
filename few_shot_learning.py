@@ -28,11 +28,11 @@ class Few_Shot_posts:
     def get_tags(self):
         return self.unique_tags
     
-    def get_filtered_posts(self, length, tag):
+    def get_filtered_posts(self, tag, length):
         df_filtered = self.df[(self.df['Length'] == length) & (self.df['tags'].apply(lambda tags: tag in tags))]
         return df_filtered.to_dict(orient='records')
 
 if __name__ == "__main__":
     fs = Few_Shot_posts()
-    posts = fs.get_filtered_posts("Medium", "Robotics")
+    posts = fs.get_filtered_posts("Robotics", "Medium")
     print(posts)
